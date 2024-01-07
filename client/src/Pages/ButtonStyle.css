@@ -1,0 +1,29 @@
+.btnSignIn {
+	position: relative;
+	width: 220px;
+	height: 45px;
+	line-height: 45px;
+	top: calc(20px);
+	left: calc(50% - 110px);
+	border: solid 1px #eeeeee;;
+	border-radius: 10px;
+	padding-left: 55px;
+	font-family: 'arial';
+	letter-spacing: 1px;
+	font-size: 14PX;
+	text-align: left;
+	background-color: transparent;
+	transition: var(--transition-time) var(--transition-type);
+}
+
+.btnSignIn:hover {
+	background:#eeeeee;
+}
+
+.btnSignIn img {
+	position: absolute;
+	height: 25px;
+	top: 11PX;
+	;
+	left: 20px;
+}
