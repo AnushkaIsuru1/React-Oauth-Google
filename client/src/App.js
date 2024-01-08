@@ -14,7 +14,7 @@ function App() {
   return (
     <Provider store={ store }>
 
-      <GoogleOAuthProvider clientId="<Your_clientID>">
+      <GoogleOAuthProvider clientId="Your_ClientID">
         <BrowserRouter>
           <Routes>
 

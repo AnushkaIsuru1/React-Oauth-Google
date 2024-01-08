@@ -12,7 +12,7 @@ const OneTapLogin = () => {
         onError: error => console.log(error),
         onSuccess: successSignIn,
         googleAccountConfigs: {
-            client_id: "<your CLienID>"
+            client_id: "<Your_ClientID>"
         }
     });
 
