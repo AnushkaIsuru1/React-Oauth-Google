@@ -13,7 +13,7 @@ const SignIn_and_GetUser_from_Backend = () => {
                 'http://localhost:5000/userinfo',
                 { access_token},
             );
-            console.log(userInfo.data);
+            console.log(userInfo.data.user);
         },
     });
 
@@ -28,3 +28,5 @@ const SignIn_and_GetUser_from_Backend = () => {
 }
 
 export default SignIn_and_GetUser_from_Backend
+
+//Before excute this js you should start backend
