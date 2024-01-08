@@ -26,7 +26,7 @@ const SignIn = () => {
 
     return (
         <>
-            <GoogleOAuthProvider clientId="466752079259-k91pivjfensmgs2n52gd5d8898k0rsp5.apps.googleusercontent.com">
+            <GoogleOAuthProvider clientId="<Your_clientID>">
                 <GoogleLogin
                     onSuccess={successSignIn}
                     onError={(err) => console.log(err)}

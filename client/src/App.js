@@ -7,24 +7,30 @@ import SignwithCustomeBtn from "./Pages/SignwithCustomeBtn";
 import OneTapLogin from "./Pages/OneTapLogin";
 import SignIn_and_GetUser_from_Backend from "./Pages/SignIn_and_GetUser_from_Backend";
 
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 function App() {
 
   return (
-    <GoogleOAuthProvider clientId="466752079259-k91pivjfensmgs2n52gd5d8898k0rsp5.apps.googleusercontent.com">
-      <BrowserRouter>
-        <Routes>
+    <Provider store={ store }>
 
-          <Route path="/" element={<SignIn />} />
+      <GoogleOAuthProvider clientId="<Your_clientID>">
+        <BrowserRouter>
+          <Routes>
 
-          <Route path="/1" element={<OneTapLogin />} />
+            <Route path="/" element={<SignIn />} />
 
-          <Route path="/2" element={<SignwithCustomeBtn />} />
+            <Route path="/1" element={<OneTapLogin />} />
 
-          <Route path="/3" element={<SignIn_and_GetUser_from_Backend/>} />
+            <Route path="/2" element={<SignwithCustomeBtn />} />
 
-        </Routes>
-      </BrowserRouter>
-    </GoogleOAuthProvider>
+            <Route path="/3" element={<SignIn_and_GetUser_from_Backend />} />
+
+          </Routes>
+        </BrowserRouter>
+      </GoogleOAuthProvider>
+
+    </Provider>
   );
 }
 
