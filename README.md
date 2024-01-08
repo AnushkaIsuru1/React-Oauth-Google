@@ -1,17 +1,13 @@
-# MERN User Authentication App with Express-session, JWT, Redux
-
-## 🤔 Overview
-
-This is a full-stack MERN authentication  app. It provides user registration, login, and logout functionalities with JSON Web Token (JWT). Expresse-Session is used to store Authentication in backend and that session store in MongoDb using Connect-Mongodb-Session. Redux is used to store authentication data in frondend.
+# React Google Outh App with , JWT, Redux
 
 <br>
 
 ## ✅ Features
 
-- User registration
-- User login with JWT authentication
-- Secure password hashing using bcrypt
-- Protected routes for authenticated users
+- Google auth sign in
+- Google oneTapLogin
+- Google Sign in with Custome Button
+- Google SignIn and GetUser from Backend
 - Auth save in frond end using redux
 <br>
 
@@ -21,28 +17,34 @@ This is a full-stack MERN authentication  app. It provides user registration, lo
   - **1. React**
   - **2. React Router Dom** for navigation
   - **3. Axios** for API requests
-  - **4. Reduc** for store auth
+  - **3. jwt-decode** for decode google token
+  - **4. Redux** for store auth
 
 - ### Backend:
   - **1. Express**
-  - **2. Mongoose** 
-  - **3. CORS** for allow secure cross-origin resource sharing, enabling the frontend to interact with the backend.
-  - **4. DOTENV** for config env data like MONGODB_CONNECTIN_STRING$
-  - **5. Express-session** Express for Session
-  
-  - **6. Connect-mongodb-session** for Mongodb-Session for session save in MongoDb
-  - **7. Bcrypt** for Encrypt password
-  - **8. Cookie-Parser** A middleware to parse and set cookies in the HTTP headers
-  - **9. JWT** A compact, URL-safe means of representing claims to be transferred between two parties.
+  - **2. CORS** for allow secure cross-origin resource sharing, enabling the frontend to interact with the backend.
+  - **3. Axios** for get userinfo from google API
 
 <br>
 
 ## ⚡ Setup
 
-1. **Clone the repository:**
-   ```bash
-    git clone https://github.com/your-username/mern-authentication-app.git
-   ```
+### 1. Create OAuth client and get CLientId
+
+Follow below tutorial
+[https://youtu.be/rTIwdDxdDDA?t=220](https://youtu.be/rTIwdDxdDDA?t=220)
+
+**<Your_ClientID> Replace to your cleint ID in below files**
+
+|File path                             |Line       |
+|--------------------------------------|-----------|
+|client\src\App.js                     |17         |
+|client\src\Pages\OneTapLogin.js       |15         |
+|client\src\Pages\SignIn.js            |29         |
+
+
+client\src\Pages\SignIn.js - Line
+   
 2. **Install Packageous:**
     ```bash
       cd backend
@@ -62,105 +64,206 @@ This is a full-stack MERN authentication  app. It provides user registration, lo
 
 <br>
 
-## 💻 **Screenshots**
+## 📗 How use Google Oauth hooks
 
-#### 1. Enter Username
-
-<p align="center">
-  <img width="70%"  src="/README/Enter Username.png" alt="Enter Username">
-</p>
-
-#### 2. Register Page
-
-<p align="center">
-  <img width="70%"  src="/README/Register.png" alt="Register Page">
-</p>
-
-#### 3. Login Page
-
-<p align="center">
-  <img width="70%"  src="/README/Sign In.png" alt="Login Page">
-</p>
-
-#### 4. Protected Rout
-
-<p align="center">
-  <img width="70%"  src="/README/Protected Rout.png" alt="Protected Rout">
-</p>
-
-<br>
-
-## ⭕ How fix errors
-
-### 1. MongoDB Connection Error
-
-**Error**
-```
-Error connecting to db: connect ECONNREFUSED ::1:27017
-```
-
-<br>
-
-**🔥 Solution** 
-<br>
-Change connection String to "mongodb://0.0.0.0/test"
-<br><br>
-
-**Before fix**
+I have include **<GoogleLogin>, useGoogleLogin with cumstom button , and OneTapLogin** in this repostory. but all those hooks should be in a **<GoogleOAuthProvider>** Component. So I use those Login pages in **<GoogleOAuthProvider>**
 
 ```js
-mongoose.connect('mongodb://localhost:27017/test')
+//App.js
+
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
+import SignIn from "./Pages/SignIn";
+import SignwithCustomeBtn from "./Pages/SignwithCustomeBtn";
+import OneTapLogin from "./Pages/OneTapLogin";
+import SignIn_and_GetUser_from_Backend from "./Pages/SignIn_and_GetUser_from_Backend";
+
+function App() {
+
+  return (
+
+      <GoogleOAuthProvider clientId="Your_ClientID">
+        <BrowserRouter>
+          <Routes>
+
+            <Route path="/" element={<SignIn />} />
+
+            <Route path="/1" element={<OneTapLogin />} />
+
+            <Route path="/2" element={<SignwithCustomeBtn />} />
+
+            <Route path="/3" element={<SignIn_and_GetUser_from_Backend />} />
+
+          </Routes>
+        </BrowserRouter>
+      </GoogleOAuthProvider>
+
+  );
+}
+
+export default App;
+
 ```
-**Fix**
+
+### 1. Login with Google button
+
+<p align="center">
+  <img width="70%"  src="/README/Sign in.jpg" alt="Sign in">
+</p>
 
 ```js
-mongoose.connect('mongodb://0.0.0.0/test')
+import React from 'react'
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
+
+const SignIn = () => {
+
+    const successSignIn = (response) => {
+        console.log(response)
+        const decode = jwtDecode(response.credential)
+        console.log(decode)
+    }
+
+    const logout = () => {
+        googleLogout()
+    }
+
+    return (
+        <>
+            <GoogleLogin
+                onSuccess={successSignIn}
+                onError={(err) => console.log(err)}
+            />
+
+            <button onClick={logout}>
+                Sign Out
+            </button>
+        </>
+    )
+}
+
+export default SignIn
 ```
 
+### 2. Login with Custome button
 
-
-### 2. Backend Can't access req.body
-
-**Error**
-```
-const { username } = req.body;
-          ^
-
-TypeError: Cannot destructure property 'username' of 'req.body' as it is undefined.
-```
-
-<br>
-
-**🔥 Solution** 
-<br>
-Use json middle ware before route "app.use(express.json())"
-<br><br>
-
-**Fix**
+<p align="center">
+  <img width="70%"  src="/README/Sign in with Custome Button.jpg" alt="Sign in with Custome Button">
+</p>
 
 ```js
-app.use(express.json())
 
-app.use('/api', router)
+import React from 'react'
+
+import { useGoogleLogin } from '@react-oauth/google'
+
+const SignIn = () => {
+
+    const login = useGoogleLogin({
+        onSuccess: token => console.log(token),
+        flow: 'auth-code',
+    })
+
+    return (
+        <>
+            <button className="btnSignIn" onClick={login}>
+                <img src={GoogleLogo} />
+                Sign In with Google
+            </button>
+        </>
+    )
+}
 ```
 
+### 3. One Tap Login
 
-### 3. Cookie not send to backend within Axios requests
-
-<br>
-
-**🔥 Solution** 
-<br>
-Change axios setting to "axios.defaults.withCredentials = true".
-
-When declare in main componnet lik "App.js" it affect to whole application
-<br><br>
-
-**Fix**
+<p align="center">
+  <img width="70%"  src="/README/One Tap Login.jpg" alt="One Tap Login">
+</p>
 
 ```js
-//in App.js
-import axios from "axios";
+import React from 'react'
+import { useGoogleOneTapLogin } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
-axios.defaults.withCredentials = true
+const OneTapLogin = () => {
+    const successSignIn = (response) => {
+        console.log((response))
+        console.log(jwtDecode(response.credential))
+    }
+
+    useGoogleOneTapLogin({
+        onError: error => console.log(error),
+        onSuccess: successSignIn,
+        googleAccountConfigs: {
+            client_id: "<Your_ClientID>"
+        }
+    });
+
+    return (
+        <></>
+    )
+}
+
+export default OneTapLogin
+```
+
+## 📗 Redux useDispatch with parameters
+
+
+```js
+//store.js
+
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+
+const authSlice = createSlice({
+    name: "auth",
+    initialState: {
+        name: "",
+        email: "",
+        picture: ""
+    },
+
+    reducers: {
+        login(state, actions) {
+            const { name, email, picture } = actions.payload
+
+            state.name = name
+            state.email = email
+            state.picture = picture
+        }
+    }
+})
+
+export const authActions = authSlice.actions
+
+export const store = configureStore({
+    reducer : authSlice.reducer
+})
+```
+
+```js
+//SignIn.js
+import React from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { authActions } from '../redux/store'
+
+const SignIn = () => {
+  const dispatch = useDispatch()
+
+  const authStore = useSelector(state => state)
+  console.log(authStore)
+
+  dispatch(authActions.login({name:"anuska", email:"kavi", picture:"asd"}))
+  console.log(authStore)
+
+  return (
+    <></>
+  )
+  
+}
+export default SignIn
 ```
