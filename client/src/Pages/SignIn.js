@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
-import { GoogleLogin, GoogleOAuthProvider,googleLogout } from '@react-oauth/google'
+import React from 'react'
+import { GoogleLogin, GoogleOAuthProvider, googleLogout } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
+import { useDispatch, useSelector } from 'react-redux'
+import { authActions } from '../redux/store'
 
 const SignIn = () => {
-    const [user, setUser] = useState({
-        email: '',
-        name: '',
-        picture: ''
-    })
+    const dispatch = useDispatch()
+    const authStore = useSelector(state => state)
+
+    console.log(authStore)
 
     const successSignIn = (response) => {
         console.log(response)
         const decode = jwtDecode(response.credential)
-        setUser({
-            ...user,
-            email : decode.email,
-            name : decode.name,
-            picture : decode.picture,
-        })
+
+        dispatch(authActions.login(decode))
+       // dispatch(authActions.login({ name: decode.name, email: decode.email, picture: decode.picture }))
+    }
+
+    const logout = () => {
+        googleLogout()
+        dispatch(authActions.logout())
+        console.log(authStore)
     }
 
     return (
@@ -30,19 +34,19 @@ const SignIn = () => {
             </GoogleOAuthProvider>
 
             {
-                user.email &&
+                authStore.email &&
                 <>
-                <button onClick={googleLogout}>
-                    Sign Out
-                </button>
-                    <img src={user.picture} />
-                    <h3>{user.email}</h3>
-                    <h3>{user.name}</h3>
+                    <button onClick={logout}>
+                        Sign Out
+                    </button>
+
+                    <img src={authStore.picture} />
+                    <h3>{authStore.email}</h3>
+                    <h3>{authStore.name}</h3>
+                    <h3>{authStore.isLoggedIn}</h3>
                 </>
             }
         </>
-
-
     )
 }
 
