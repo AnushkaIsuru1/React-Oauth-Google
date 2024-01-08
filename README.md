@@ -1,4 +1,4 @@
-# React Google Outh App with , JWT, Redux
+# React-Oauth/Google with jwt-decode, Redux
 
 <br>
 
@@ -15,10 +15,11 @@
 
 - ### Frontend:
   - **1. React**
-  - **2. React Router Dom** for navigation
-  - **3. Axios** for API requests
-  - **3. jwt-decode** for decode google token
-  - **4. Redux** for store auth
+  - **2. @react-oauth/google** for use call Google Oauth API
+  - **3. React Router Dom** for navigation
+  - **4. Axios** for API requests
+  - **5. jwt-decode** for decode google token
+  - **6. Redux** for store auth
 
 - ### Backend:
   - **1. Express**
@@ -43,7 +44,7 @@ Follow below tutorial
 |client\src\Pages\SignIn.js            |29         |
 
 
-client\src\Pages\SignIn.js - Line
+<br>
    
 2. **Install Packageous:**
     ```bash
@@ -106,6 +107,7 @@ function App() {
 export default App;
 
 ```
+<br>
 
 ### 1. Login with Google button
 
@@ -147,6 +149,8 @@ const SignIn = () => {
 export default SignIn
 ```
 
+<br>
+
 ### 2. Login with Custome button
 
 <p align="center">
@@ -176,6 +180,7 @@ const SignIn = () => {
     )
 }
 ```
+<br>
 
 ### 3. One Tap Login
 
@@ -209,6 +214,7 @@ const OneTapLogin = () => {
 
 export default OneTapLogin
 ```
+<br>
 
 ## 📗 Redux useDispatch with parameters
 
