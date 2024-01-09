@@ -30,7 +30,7 @@
 
 ## ⚡ Setup
 
-### 1. Create OAuth client and get CLientId
+### 1. Create OAuth client and get ClientId
 
 <br>
 
@@ -38,7 +38,7 @@ Follow below tutorial<br>
 [https://youtu.be/rTIwdDxdDDA?t=220](https://youtu.be/rTIwdDxdDDA?t=220)
 
 
-### 2. Replace <Your_ClientID> to your cleintID in bellow files**
+### 2. Replace <Your_ClientID> to your cleintID in below files
 
 |File path                             |Line       |
 |--------------------------------------|-----------|
@@ -71,7 +71,7 @@ Follow below tutorial<br>
 
 ## 📗 How use Google Oauth hooks
 
-I have included **GoogleLogin**  , **useGoogleLogin with cumstom button** and **OneTapLogin** in this repostory. Those all hooks should be childrens of a **GoogleOAuthProvider** Component. So I used **GoogleOAuthProvider** in **App.js** and Sign in components declared in that **GoogleOAuthProvider** as bellow code
+I have included **GoogleLogin**  , **useGoogleLogin with cumstom button** and **OneTapLogin** in this repostory. Those all hooks should be childrens of a **GoogleOAuthProvider** Component. So I used **GoogleOAuthProvider** in **App.js** and Sign in components declared in that **GoogleOAuthProvider** as below code
 
 ```js
 //App.js
@@ -222,7 +222,7 @@ export default OneTapLogin
 
 ## 📗 Redux useDispatch with parameters
 
-### 1. Get data from Redux store - useSelector
+- ### Get data from Redux store - useSelector
 
 ```js
 import { useSelector } from 'react-redux'
@@ -231,7 +231,7 @@ const authStore = useSelector(state => state)
 console.log(authStore)
 ```
 
-### 2. Update data of Redux store - useDispatch
+- ### Update data of Redux store - useDispatch
 
 ```js
 import { useDispatch } from 'react-redux'
