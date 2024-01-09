@@ -32,10 +32,13 @@
 
 ### 1. Create OAuth client and get CLientId
 
-Follow below tutorial
+<br>
+
+Follow below tutorial<br>
 [https://youtu.be/rTIwdDxdDDA?t=220](https://youtu.be/rTIwdDxdDDA?t=220)
 
-**<Your_ClientID> Replace to your cleint ID in below files**
+
+### 2. Replace <Your_ClientID> to your cleintID in bellow files**
 
 |File path                             |Line       |
 |--------------------------------------|-----------|
@@ -46,28 +49,29 @@ Follow below tutorial
 
 <br>
    
-2. **Install Packageous:**
-    ```bash
-      cd backend
-    ```
-    ```bash
-      npm install
-    ```
+### 3. Install Packageous:
 
-    ```bash
-      cd ../client
-    ```
+  ```bash
+  cd backend
+  ```
+
+  ```bash
+    npm install
+  ```
+
+  ```bash
+  cd ../client
+  ```
     
-    ```bash
-      npm install
-    ```
-
+  ```bash
+    npm install
+  ```
 
 <br>
 
 ## 📗 How use Google Oauth hooks
 
-I have include **<GoogleLogin>, useGoogleLogin with cumstom button , and OneTapLogin** in this repostory. but all those hooks should be in a **<GoogleOAuthProvider>** Component. So I use those Login pages in **<GoogleOAuthProvider>**
+I have included **GoogleLogin**  , **useGoogleLogin with cumstom button** and **OneTapLogin** in this repostory. Those all hooks should be childrens of a **GoogleOAuthProvider** Component. So I used **GoogleOAuthProvider** in **App.js** and Sign in components declared in that **GoogleOAuthProvider** as bellow code
 
 ```js
 //App.js
@@ -218,6 +222,27 @@ export default OneTapLogin
 
 ## 📗 Redux useDispatch with parameters
 
+### 1. Get data from Redux store - useSelector
+
+```js
+import { useSelector } from 'react-redux'
+
+const authStore = useSelector(state => state)
+console.log(authStore)
+```
+
+### 2. Update data of Redux store - useDispatch
+
+```js
+import { useDispatch } from 'react-redux'
+
+const dispatch = useDispatch()
+
+dispatch(authActions.login({name:"anuska", email:"kavi", picture:"asd"}))
+```
+<br>
+
+## Complete Code 
 
 ```js
 //store.js
